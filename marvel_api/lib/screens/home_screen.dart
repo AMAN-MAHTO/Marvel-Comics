@@ -24,18 +24,26 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Rest API call"),
+          title: const Text("Marvel characters"),
         ),
-        body: ListView.builder(
-            itemCount: character_result.length,
-            itemBuilder: (context, index) {
-              final character = character_result[index];
-              return ListTile(
-                leading: Image.network(character.thumbnail.imgUrl()),
-                title: Text(character.name),
-                subtitle: Text(character.description),
-              );
-            }));
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/themeChanger');
+          },
+          child: Icon(Icons.settings),
+        ),
+        body: character_result.length == 0
+            ? LinearProgressIndicator()
+            : ListView.builder(
+                itemCount: character_result.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: Image.network(
+                        character_result[index].thumbnail.imgUrl()),
+                    title: Text(character_result[index].name),
+                    subtitle: Text(character_result[index].description),
+                  );
+                }));
   }
 
   Future<void> fetchCharacters() async {
