@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
 
 import 'package:marvel_api/models/result_character.dart';
+import 'package:marvel_api/models/result_comic.dart';
 import 'package:marvel_api/services/marvel_api_impl.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class ComicsListScreen extends StatefulWidget {
+  const ComicsListScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ComicsListScreen> createState() => _ComicsListScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  List<ResultCharacter> character_result = [];
+class _ComicsListScreenState extends State<ComicsListScreen> {
+  List<ResultComic> comic_result = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchCharacters();
+    fetchComics();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Marvel Comics"),
+          title: const Text("Marvel characters"),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -32,25 +33,25 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           child: Icon(Icons.settings),
         ),
-        body: character_result.length == 0
+        body: comic_result.length == 0
             ? LinearProgressIndicator()
             : ListView.builder(
-                itemCount: character_result.length,
+                itemCount: comic_result.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    leading: Image.network(
-                        character_result[index].thumbnail.imgUrl()),
-                    title: Text(character_result[index].name),
-                    subtitle: Text(character_result[index].description),
+                    leading:
+                        Image.network(comic_result[index].thumbnail!.imgUrl()),
+                    title: Text(comic_result[index].title!),
+                    subtitle: Text(comic_result[index].prices.toString()),
                     onTap: () {},
                   );
                 }));
   }
 
-  Future<void> fetchCharacters() async {
-    final response = await MarvelAPI.getCharacters();
+  Future<void> fetchComics() async {
+    final response = await MarvelAPI.getComics();
     setState(() {
-      character_result = response;
+      comic_result = response;
     });
   }
 }

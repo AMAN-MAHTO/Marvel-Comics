@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_api/provider/theme_changer_provider.dart';
+import 'package:marvel_api/screens/comics_list_screen.dart';
 import 'package:marvel_api/screens/home_screen.dart';
 import 'package:marvel_api/screens/theme_changer_screen.dart';
 import 'package:provider/provider.dart';
@@ -24,14 +25,14 @@ class MainApp extends StatelessWidget {
         title: 'Flutter Demo',
         themeMode: themeChanger.theme,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
           useMaterial3: true,
         ),
         darkTheme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
               seedColor: Colors.red, brightness: Brightness.dark),
         ),
-        home: HomeScreen(),
+        home: ComicsListScreen(),
         routes: {
           '/homepage': (context) => HomeScreen(),
           '/themeChanger': (context) => ThemeChangerScreen(),

@@ -1,25 +1,25 @@
-import 'items2.dart';
+import 'package:marvel_api/models/items3.dart';
 
-class Comics {
-  final int available;
-  final String collectionURI;
-  final List<Items2> items;
-  final int returned;
+class Creators {
+  final int? available;
+  final String? collectionURI;
+  final List<Items3>? items;
+  final int? returned;
 
-  Comics(
+  Creators(
       {required this.available,
       required this.collectionURI,
       required this.items,
       required this.returned});
 
-  factory Comics.fromMap(Map<String, dynamic> json) {
-    var items = <Items2>[];
+  factory Creators.fromMap(Map<String, dynamic> json) {
+    var items = <Items3>[];
     if (json['items'] != null) {
       json['items'].forEach((v) {
-        items.add(new Items2.fromMap(v));
+        items!.add(Items3.fromMap(v));
       });
     }
-    return Comics(
+    return Creators(
         available: json['available'],
         collectionURI: json['collectionURI'],
         items: items,

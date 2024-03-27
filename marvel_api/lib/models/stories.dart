@@ -1,7 +1,9 @@
+import 'items3.dart';
+
 class Stories {
   final int available;
   final String collectionURI;
-  final List<Items> items;
+  final List<Items3> items;
   final int returned;
 
   Stories(
@@ -11,35 +13,16 @@ class Stories {
       required this.returned});
 
   factory Stories.fromMap(Map<String, dynamic> json) {
-    var items = <Items>[];
+    var items = <Items3>[];
     if (json['items'] != null) {
-      
       json['items'].forEach((v) {
-        items.add(new Items.fromMap(v));
+        items.add(new Items3.fromMap(v));
       });
     }
     return Stories(
-          collectionURI: json['collectionURI'],
-          available: json['available'],
-          items: items,
-          returned: json['returned']);
-    
-    
+        collectionURI: json['collectionURI'],
+        available: json['available'],
+        items: items,
+        returned: json['returned']);
   }
-
-}
-
-class Items {
-  String? resourceURI;
-  String? name;
-  String? type;
-
-  Items({required this.resourceURI,required this.name,required this.type});
-
-  factory Items.fromMap(Map<String, dynamic> json) {
-    return Items(resourceURI: json['resourceURI'], name: json['name'], type: json['type']);
-   
-  }
-
-  
 }

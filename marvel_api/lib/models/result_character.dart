@@ -4,7 +4,7 @@ import 'comics.dart';
 import 'thumbnail.dart';
 import 'urls.dart';
 
-class Character {
+class ResultCharacter {
   final int id;
   final String name;
   final String description;
@@ -17,7 +17,7 @@ class Character {
   final Stories events;
   final List<Urls> urls;
 
-  Character(
+  ResultCharacter(
       {required this.id,
       required this.name,
       required this.description,
@@ -30,7 +30,7 @@ class Character {
       required this.events,
       required this.urls});
 
-  factory Character.fromMap(Map<String, dynamic> e) {
+  factory ResultCharacter.fromMap(Map<String, dynamic> e) {
     final thumbnail = Thumbnail.fromMap(e['thumbnail']);
     final comics = Comics.fromMap(e['comics']);
     final series = Comics.fromMap(e['series']);
@@ -43,7 +43,7 @@ class Character {
       });
     }
 
-    return Character(
+    return ResultCharacter(
         id: e['id'],
         name: e['name'],
         description: e['description'],
