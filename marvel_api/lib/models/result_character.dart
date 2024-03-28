@@ -1,22 +1,21 @@
 import 'package:marvel_api/models/list_type2.dart';
 
-
 import 'list_type1.dart';
 import 'thumbnail.dart';
 import 'urls.dart';
 
 class ResultCharacter {
-  final int id;
-  final String name;
-  final String description;
+  final int? id;
+  final String? name;
+  final String? description;
   final String modified;
-  final Thumbnail thumbnail;
-  final String resourceURI;
-  final ListType1 comics;
-  final ListType1 series;
-  final ListType2 stories;
-  final ListType2 events;
-  final List<Urls> urls;
+  final Thumbnail? thumbnail;
+  final String? resourceURI;
+  final ListType1? comics;
+  final ListType1? series;
+  final ListType2? stories;
+  final ListType2? events;
+  final List<Urls>? urls;
 
   ResultCharacter(
       {required this.id,
@@ -32,11 +31,13 @@ class ResultCharacter {
       required this.urls});
 
   factory ResultCharacter.fromMap(Map<String, dynamic> e) {
-    final thumbnail = Thumbnail.fromMap(e['thumbnail']);
-    final comics = ListType1.fromMap(e['comics']);
-    final series = ListType1.fromMap(e['series']);
-    final stories = ListType2.fromMap(e['stories']);
-    final event = ListType2.fromMap(e['events']);
+    final thumbnail =
+        e['thumbnail'] == null ? null : Thumbnail.fromMap(e['thumbnail']);
+    final comics = e['comics'] == null ? null : ListType1.fromMap(e['comics']);
+    final series = e['series'] == null ? null : ListType1.fromMap(e['series']);
+    final stories =
+        e['stories'] == null ? null : ListType2.fromMap(e['stories']);
+    final event = e['events'] == null ? null : ListType2.fromMap(e['events']);
     var urls = <Urls>[];
     if (e['urls'] != null) {
       e['urls'].forEach((v) {

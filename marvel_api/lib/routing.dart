@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:marvel_api/screens/character_list_screen.dart';
-import 'package:marvel_api/screens/character_screen.dart';
-import 'package:marvel_api/screens/comic_screen.dart';
-import 'package:marvel_api/screens/comics_list_screen.dart';
+import 'package:marvel_api/screens/character/character_list_screen.dart';
+import 'package:marvel_api/screens/character/character_screen.dart';
+import 'package:marvel_api/screens/comic/comic_screen.dart';
+import 'package:marvel_api/screens/comic/comics_list_screen.dart';
+import 'package:marvel_api/screens/event/event_list_screen.dart';
 import 'package:marvel_api/screens/home_screen.dart';
 
 class RoutGenerator {
@@ -24,6 +25,15 @@ class RoutGenerator {
         return MaterialPageRoute(builder: (_) => ComicsListScreen());
 
       case '/comic':
+        if (args is String) {
+          return MaterialPageRoute(builder: (_) => ComicScreen(id: args));
+        } else
+          return _errorRoute();
+      
+      case '/events':
+        return MaterialPageRoute(builder: (_) => EventListScreen());
+
+      case '/event':
         if (args is String) {
           return MaterialPageRoute(builder: (_) => ComicScreen(id: args));
         } else

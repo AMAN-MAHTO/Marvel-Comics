@@ -1,10 +1,10 @@
 import 'items2.dart';
 
 class ListType1 {
-  final int available;
-  final String collectionURI;
-  final List<Items2> items;
-  final int returned;
+  final int? available;
+  final String? collectionURI;
+  final List<Items2>? items;
+  final int? returned;
 
   ListType1(
       {required this.available,

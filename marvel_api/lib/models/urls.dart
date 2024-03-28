@@ -1,6 +1,6 @@
 class Urls {
-  final String type;
-  final String url;
+  final String? type;
+  final String? url;
 
   Urls({required this.type, required this.url});
 

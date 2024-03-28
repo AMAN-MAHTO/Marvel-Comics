@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:marvel_api/screens/character_list_screen.dart';
-import 'package:marvel_api/screens/comics_list_screen.dart';
+import 'package:marvel_api/screens/character/character_list_screen.dart';
+import 'package:marvel_api/screens/comic/comics_list_screen.dart';
+import 'package:marvel_api/screens/event/event_list_screen.dart';
 import 'package:marvel_api/screens/theme_changer_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,7 +13,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentPageIndex = 0;
-  var titles = ['C H A R A C T E R S', 'C O M I C S', 'S E T T I N G'];
+  var titles = [
+    'C H A R A C T E R S',
+    'C O M I C S',
+    'E V E N T S',
+    'S E T T I N G'
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: <Widget>[
         CharacterListScreen(),
         ComicsListScreen(),
-        ThemeChangerScreen()
+        EventListScreen(),
+        ThemeChangerScreen(),
       ][currentPageIndex],
     );
   }
@@ -47,6 +54,11 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedIcon: Icon(Icons.note),
         icon: Icon(Icons.note_outlined),
         label: 'Comics',
+      ),
+      NavigationDestination(
+        selectedIcon: Icon(Icons.event),
+        icon: Icon(Icons.event_outlined),
+        label: 'Events',
       ),
       NavigationDestination(
         selectedIcon: Icon(Icons.settings),

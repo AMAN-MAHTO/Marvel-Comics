@@ -29,19 +29,19 @@ class _CharacterListScreenState extends State<CharacterListScreen> {
 
   ListView character_list(DataProvider value) {
     return ListView.builder(
-            itemCount: value.characterList.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: Image.network(
-                    value.characterList[index].thumbnail.imgUrl()),
-                title: Text(value.characterList[index].name),
-                subtitle: Text(value.characterList[index].description),
-                onTap: () {
-                  print(value.characterList[index].id.toString());
-                  Navigator.pushNamed(context, '/character',
-                      arguments: value.characterList[index].id.toString());
-                },
-              );
-            });
+        itemCount: value.characterList.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading:
+                Image.network(value.characterList[index].thumbnail!.imgUrl()),
+            title: Text(value.characterList[index].name!),
+            subtitle: Text(value.characterList[index].description!),
+            onTap: () {
+              print(value.characterList[index].id.toString());
+              Navigator.pushNamed(context, '/character',
+                  arguments: value.characterList[index].id.toString());
+            },
+          );
+        });
   }
 }

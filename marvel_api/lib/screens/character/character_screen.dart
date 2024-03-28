@@ -27,11 +27,11 @@ class _CharacterScreenState extends State<CharacterScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(character!.name),
+        title: Text(character!.name!),
       ),
       body: character == null
           ? LinearProgressIndicator()
-          : Center(child: Text(character!.name)),
+          : Center(child: Text(character!.name!)),
     );
   }
 }

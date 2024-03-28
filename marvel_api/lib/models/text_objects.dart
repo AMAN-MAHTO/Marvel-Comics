@@ -1,7 +1,7 @@
 class TextObjects {
-  final String type;
-  final String language;
-  final String text;
+  final String? type;
+  final String? language;
+  final String? text;
 
   TextObjects({required this.type, required this.language, required this.text});
 

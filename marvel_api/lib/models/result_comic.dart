@@ -1,4 +1,3 @@
-import 'package:marvel_api/models/items3.dart';
 import 'package:marvel_api/models/thumbnail.dart';
 import 'package:marvel_api/models/urls.dart';
 
@@ -9,33 +8,33 @@ import 'series.dart';
 import 'text_objects.dart';
 
 class ResultComic {
-  final int id;
-  final int digitalId;
-  final String title;
-  final int issueNumber;
-  final String variantDescription;
-  final String description;
-  final String modified;
-  final String isbn;
-  final String upc;
-  final String diamondCode;
-  final String ean;
-  final String issn;
-  final String format;
-  final int pageCount;
-  final List<TextObjects> textObjects;
-  final String resourceURI;
-  final List<Urls> urls;
-  final Series series;
-  final List<Series> variants;
-  final List<Dates> dates;
-  final List<Prices> prices;
-  final Thumbnail thumbnail;
-  final List<Thumbnail> images;
-  final ListType2 creators;
-  final ListType2 characters;
-  final ListType2 stories;
-  final ListType2 events;
+  final int? id;
+  final int? digitalId;
+  final String? title;
+  final int? issueNumber;
+  final String? variantDescription;
+  final String? description;
+  final String? modified;
+  final String? isbn;
+  final String? upc;
+  final String? diamondCode;
+  final String? ean;
+  final String? issn;
+  final String? format;
+  final int? pageCount;
+  final List<TextObjects>? textObjects;
+  final String? resourceURI;
+  final List<Urls>? urls;
+  final Series? series;
+  final List<Series>? variants;
+  final List<Dates>? dates;
+  final List<Prices>? prices;
+  final Thumbnail? thumbnail;
+  final List<Thumbnail>? images;
+  final ListType2? creators;
+  final ListType2? characters;
+  final ListType2? stories;
+  final ListType2? events;
 
   ResultComic(
       {required this.id,
@@ -80,7 +79,7 @@ class ResultComic {
         urls!.add(new Urls.fromMap(v));
       });
     }
-    var series = Series.fromMap(json['series']);
+
     var variants = <Series>[];
     if (json['variants'] != null) {
       json['variants'].forEach((v) {
@@ -100,7 +99,6 @@ class ResultComic {
         prices!.add(new Prices.fromMap(v));
       });
     }
-    var thumbnail = Thumbnail.fromMap(json['thumbnail']);
 
     var images = <Thumbnail>[];
     if (json['images'] != null) {
@@ -108,17 +106,26 @@ class ResultComic {
         images!.add(Thumbnail.fromMap(v));
       });
     }
-    var creators = ListType2.fromMap(json['creators']);
-    var characters = new ListType2.fromMap(json['characters']);
-    var stories = ListType2.fromMap(json['stories']);
-    var events = ListType2.fromMap(json['events']);
+    var thumbnail =
+        json['thumbnail'] == null ? null : Thumbnail.fromMap(json['thumbnail']);
+    var series = json['series'] == null ? null : Series.fromMap(json['series']);
+    var creators =
+        json['creators'] == null ? null : ListType2.fromMap(json['creators']);
+    var characters = json['characters'] == null
+        ? null
+        : ListType2.fromMap(json['characters']);
+    var stories =
+        json['stories'] == null ? null : ListType2.fromMap(json['stories']);
+    var events =
+        json['events'] == null ? null : ListType2.fromMap(json['events']);
+
     return ResultComic(
         id: json['id'],
         digitalId: json['digitalId'],
         title: json['title'],
         issueNumber: json['issueNumber'],
         variantDescription: json['variantDescription'],
-        description: json['description'],
+        description: json['description?'],
         modified: json['modified'],
         isbn: json['isbn'],
         upc: json['upc'],

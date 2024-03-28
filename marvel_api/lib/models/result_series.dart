@@ -59,14 +59,21 @@ class ResultSeries {
     var rating = json['rating'];
     var type = json['type'];
     var modified = json['modified'];
-    var thumbnail = Thumbnail.fromMap(json['thumbnail']);
-    var creators = ListType2.fromMap(json['creators']);
-    var characters = ListType1.fromMap(json['characters']);
-    var stories = ListType2.fromMap(json['stories']);
-    var comics = ListType1.fromMap(json['comics']);
-    var events = ListType2.fromMap(json['events']);
     var next = json['next'];
     var previous = json['previous'];
+    var thumbnail =
+        json['thumbnail'] == null ? null : Thumbnail.fromMap(json['thumbnail']);
+    var creators =
+        json['creators'] == null ? null : ListType2.fromMap(json['creators']);
+    var characters = json['characters'] == null
+        ? null
+        : ListType1.fromMap(json['characters']);
+    var stories =
+        json['stories'] == null ? null : ListType2.fromMap(json['stories']);
+    var comics =
+        json['comics'] == null ? null : ListType1.fromMap(json['comics']);
+    var events =
+        json['events'] == null ? null : ListType2.fromMap(json['events']);
 
     return ResultSeries(
         id: id,

@@ -103,7 +103,7 @@ class MarvelAPI {
   }
 
   static Future<List<ResultEvent>> getEvents() async {
-    const url = '${BASE_URL}/creators${AUTH}';
+    const url = '${BASE_URL}/events${AUTH}';
     final uri = Uri.parse(url);
     final respond = await http.get(uri);
     final body = respond.body;
@@ -119,7 +119,7 @@ class MarvelAPI {
   }
 
   static Future<ResultEvent?> getEventById(String id) async {
-    const url = '${BASE_URL}/creators${AUTH}';
+    const url = '${BASE_URL}/events${AUTH}';
     final uri = Uri.parse(url);
     final respond = await http.get(uri);
     final body = respond.body;
@@ -133,7 +133,7 @@ class MarvelAPI {
   }
 
   static Future<List<ResultSeries>> getSeries() async {
-    const url = '${BASE_URL}/creators${AUTH}';
+    const url = '${BASE_URL}/series${AUTH}';
     final uri = Uri.parse(url);
     final respond = await http.get(uri);
     final body = respond.body;
@@ -149,7 +149,7 @@ class MarvelAPI {
   }
 
   static Future<ResultSeries?> getSeriesById(String id) async {
-    const url = '${BASE_URL}/creators${AUTH}';
+    const url = '${BASE_URL}/series${AUTH}';
     final uri = Uri.parse(url);
     final respond = await http.get(uri);
     final body = respond.body;

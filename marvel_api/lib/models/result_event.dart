@@ -5,22 +5,22 @@ import 'package:marvel_api/models/thumbnail.dart';
 import 'package:marvel_api/models/urls.dart';
 
 class ResultEvent {
-  final int id;
-  final String title;
-  final String description;
-  final String resourceURI;
-  final List<Urls> urls;
-  final String modified;
-  final String start;
-  final String end;
-  final Thumbnail thumbnail;
-  final ListType2 creators;
-  final ListType1 characters;
-  final ListType2 stories;
-  final ListType1 comics;
-  final ListType1 series;
-  final Items2 next;
-  final Items2 previous;
+  final int? id;
+  final String? title;
+  final String? description;
+  final String? resourceURI;
+  final List<Urls>? urls;
+  final String? modified;
+  final String? start;
+  final String? end;
+  final Thumbnail? thumbnail;
+  final ListType2? creators;
+  final ListType1? characters;
+  final ListType2? stories;
+  final ListType1? comics;
+  final ListType1? series;
+  final Items2? next;
+  final Items2? previous;
 
   ResultEvent(
       {required this.id,
@@ -54,14 +54,14 @@ class ResultEvent {
     var modified = json['modified'];
     var start = json['start'];
     var end = json['end'];
-    var thumbnail = Thumbnail.fromMap(json['thumbnail']);
-    var creators = ListType2.fromMap(json['creators']);
-    var characters = ListType1.fromMap(json['characters']);
-    var stories = ListType2.fromMap(json['stories']);
-    var comics = ListType1.fromMap(json['comics']);
-    var series = ListType1.fromMap(json['series']);
-    var next = Items2.fromMap(json['next']);
-    var previous = Items2.fromMap(json['previous']);
+    var thumbnail = json['thumbnail'] == null? null:Thumbnail.fromMap(json['thumbnail']);
+    var creators = json['creators'] == null? null:ListType2.fromMap(json['creators']);
+    var characters = json['characters'] == null? null:ListType1.fromMap(json['characters']);
+    var stories = json['stories'] == null? null:ListType2.fromMap(json['stories']);
+    var comics = json['comics'] == null? null:ListType1.fromMap(json['comics']);
+    var series = json['series'] == null? null:ListType1.fromMap(json['series']);
+    var next = json['next'] == null? null:Items2.fromMap(json['next']);
+    var previous = json['previous'] == null? null:Items2.fromMap(json['previous']);
 
     return ResultEvent(
         id: id,
