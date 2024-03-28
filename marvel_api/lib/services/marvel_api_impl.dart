@@ -25,7 +25,21 @@ class MarvelAPI {
     return results;
   }
 
-  static Future<List<ResultComic>> getComics() async{
+  static Future<ResultCharacter?> getCharacterById(String id) async {
+    final url = '${BASE_URL}/characters/${id}${AUTH}';
+    final uri = Uri.parse(url);
+    final respond = await http.get(uri);
+    final body = respond.body;
+    final json = jsonDecode(body);
+    ResultCharacter? results = null;
+    if (json['data']['results'] != null) {
+      results = ResultCharacter.fromMap(json['data']['results'][0]);
+      // print(results);
+    }
+    return results;
+  }
+
+  static Future<List<ResultComic>> getComics() async {
     const url = '${BASE_URL}/comics${AUTH}';
     final uri = Uri.parse(url);
     final respond = await http.get(uri);

@@ -14,17 +14,9 @@ class _ThemeChangerScreenState extends State<ThemeChangerScreen> {
   Widget build(BuildContext context) {
     var themeChanger = Provider.of<ThemeChangerProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: Text("Theme changer"),
-      ),
       body: Column(
         children: [
+          Text("Themes"),
           RadioListTile(
             title: Text("Light Mode"),
             value: ThemeMode.light,

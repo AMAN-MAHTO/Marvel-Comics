@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:marvel_api/models/result_character.dart';
 import 'package:marvel_api/models/result_comic.dart';
 import 'package:marvel_api/services/marvel_api_impl.dart';
 
@@ -24,15 +23,6 @@ class _ComicsListScreenState extends State<ComicsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Marvel characters"),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/themeChanger');
-          },
-          child: Icon(Icons.settings),
-        ),
         body: comic_result.length == 0
             ? LinearProgressIndicator()
             : ListView.builder(
@@ -50,8 +40,10 @@ class _ComicsListScreenState extends State<ComicsListScreen> {
 
   Future<void> fetchComics() async {
     final response = await MarvelAPI.getComics();
-    setState(() {
-      comic_result = response;
-    });
+    if (mounted) {
+      setState(() {
+        comic_result = response;
+      });
+    }
   }
 }

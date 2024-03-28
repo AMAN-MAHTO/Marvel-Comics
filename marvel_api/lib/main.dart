@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_api/provider/theme_changer_provider.dart';
+import 'package:marvel_api/routing.dart';
+import 'package:marvel_api/screens/character_list_screen.dart';
+import 'package:marvel_api/screens/character_screen.dart';
 import 'package:marvel_api/screens/comics_list_screen.dart';
-import 'package:marvel_api/screens/home_screen.dart';
+
 import 'package:marvel_api/screens/theme_changer_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -32,11 +35,8 @@ class MainApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(
               seedColor: Colors.red, brightness: Brightness.dark),
         ),
-        home: ComicsListScreen(),
-        routes: {
-          '/homepage': (context) => HomeScreen(),
-          '/themeChanger': (context) => ThemeChangerScreen(),
-        },
+        initialRoute: '/',
+        onGenerateRoute: RoutGenerator.generateRoute,
       );
     });
   }
