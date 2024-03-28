@@ -1,81 +1,63 @@
+import 'dart:math';
+
 import 'package:marvel_api/models/list_type1.dart';
 import 'package:marvel_api/models/list_type2.dart';
+import 'package:marvel_api/models/items2.dart';
+import 'package:marvel_api/models/series.dart';
 import 'package:marvel_api/models/thumbnail.dart';
-import 'package:marvel_api/models/urls.dart';
 
-class ResultCreator {
+class ResultStorie {
   final int id;
   final String title;
-  final Null description;
+  final String description;
   final String resourceURI;
-  final List<Urls> urls;
-  final int startYear;
-  final int endYear;
-  final String rating;
   final String type;
   final String modified;
   final Thumbnail thumbnail;
   final ListType2 creators;
   final ListType2 characters;
-  final ListType2 stories;
-  final ListType1 comics;
+  final Series series;
+  final Series comics;
   final ListType2 events;
-  final Null next;
-  final Null previous;
+  final Items2 originalIssue;
 
-  ResultCreator(
+  ResultStorie(
       {required this.id,
       required this.title,
       required this.description,
       required this.resourceURI,
-      required this.urls,
-      required this.startYear,
-      required this.endYear,
-      required this.rating,
       required this.type,
       required this.modified,
       required this.thumbnail,
       required this.creators,
       required this.characters,
-      required this.stories,
+      required this.series,
       required this.comics,
       required this.events,
-      required this.next,
-      required this.previous});
+      required this.originalIssue});
 
-  factory ResultCreator.fromMap(Map<String, dynamic> json) {
-    var urls = <Urls>[];
-    if (json['urls'] != null) {
-      json['urls'].forEach((v) {
-        urls!.add(new Urls.fromMap(v));
-      });
-    }
-
-    var thumbnail = Thumbnail.fromMap(json['thumbnail']);
+  factory ResultStorie.fromMap(Map<String, dynamic> json) {
+    final thumbnail = Thumbnail.fromMap(json['thumbnail']);
+    final comics = Series.fromMap(json['comics']);
+    final series = Series.fromMap(json['series']);
     var creators = ListType2.fromMap(json['creators']);
     var characters = ListType2.fromMap(json['characters']);
-    var stories = ListType2.fromMap(json['stories']);
-    var comics = ListType1.fromMap(json['comics']);
-    var events = ListType2.fromMap(json['events']);
 
-    return ResultCreator(
+    var events = ListType2.fromMap(json['events']);
+    var originalIssue = Items2.fromMap(json['originalIssue']);
+    return ResultStorie(
         id: json['id'],
         title: json['title'],
         description: json['description'],
         resourceURI: json['resourceURI'],
-        urls: urls,
-        startYear: json['startYear'],
-        endYear: json['endYear'],
-        rating: json['rating'],
         type: json['type'],
         modified: json['modified'],
         thumbnail: thumbnail,
         creators: creators,
         characters: characters,
-        stories: stories,
+        series: series,
         comics: comics,
         events: events,
-        next: json['next'],
-        previous: json['previous']);
+        originalIssue: originalIssue);
   }
 }

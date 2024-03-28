@@ -1,6 +1,7 @@
-import 'package:marvel_api/models/stories.dart';
+import 'package:marvel_api/models/list_type2.dart';
 
-import 'comics.dart';
+
+import 'list_type1.dart';
 import 'thumbnail.dart';
 import 'urls.dart';
 
@@ -11,10 +12,10 @@ class ResultCharacter {
   final String modified;
   final Thumbnail thumbnail;
   final String resourceURI;
-  final Comics comics;
-  final Comics series;
-  final Stories stories;
-  final Stories events;
+  final ListType1 comics;
+  final ListType1 series;
+  final ListType2 stories;
+  final ListType2 events;
   final List<Urls> urls;
 
   ResultCharacter(
@@ -32,10 +33,10 @@ class ResultCharacter {
 
   factory ResultCharacter.fromMap(Map<String, dynamic> e) {
     final thumbnail = Thumbnail.fromMap(e['thumbnail']);
-    final comics = Comics.fromMap(e['comics']);
-    final series = Comics.fromMap(e['series']);
-    final stories = Stories.fromMap(e['stories']);
-    final event = Stories.fromMap(e['events']);
+    final comics = ListType1.fromMap(e['comics']);
+    final series = ListType1.fromMap(e['series']);
+    final stories = ListType2.fromMap(e['stories']);
+    final event = ListType2.fromMap(e['events']);
     var urls = <Urls>[];
     if (e['urls'] != null) {
       e['urls'].forEach((v) {

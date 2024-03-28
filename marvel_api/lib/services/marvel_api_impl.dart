@@ -6,6 +6,7 @@ import 'package:marvel_api/models/result_comic.dart';
 import 'package:marvel_api/models/result_creator.dart';
 import 'package:marvel_api/models/result_event.dart';
 import 'package:marvel_api/models/result_series.dart';
+import 'package:marvel_api/models/result_storie.dart';
 
 const BASE_URL = 'http://gateway.marvel.com/v1/public';
 const AUTH =
@@ -156,6 +157,36 @@ class MarvelAPI {
     ResultSeries? results;
     if (json['data']['results'] != null) {
       results = (ResultSeries.fromMap(json['data']['results'][0]));
+      // print(results);
+    }
+    return results;
+  }
+
+  static Future<List<ResultStorie>> getStories() async {
+    const url = '${BASE_URL}/stories${AUTH}';
+    final uri = Uri.parse(url);
+    final respond = await http.get(uri);
+    final body = respond.body;
+    final json = jsonDecode(body);
+    List<ResultStorie> results = [];
+    if (json['data']['results'] != null) {
+      json['data']['results'].forEach((v) {
+        results.add(ResultStorie.fromMap(v));
+        // print(results);
+      });
+    }
+    return results;
+  }
+
+  static Future<ResultStorie?> getStorieById(String id) async {
+    const url = '${BASE_URL}/stories${AUTH}';
+    final uri = Uri.parse(url);
+    final respond = await http.get(uri);
+    final body = respond.body;
+    final json = jsonDecode(body);
+    ResultStorie? results;
+    if (json['data']['results'] != null) {
+      results = (ResultStorie.fromMap(json['data']['results'][0]));
       // print(results);
     }
     return results;

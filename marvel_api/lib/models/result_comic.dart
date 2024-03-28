@@ -2,40 +2,40 @@ import 'package:marvel_api/models/items3.dart';
 import 'package:marvel_api/models/thumbnail.dart';
 import 'package:marvel_api/models/urls.dart';
 
-import 'creators.dart';
+import 'list_type2.dart';
 import 'dates.dart';
 import 'prices.dart';
 import 'series.dart';
 import 'text_objects.dart';
 
 class ResultComic {
-  final int? id;
-  final int? digitalId;
-  final String? title;
-  final int? issueNumber;
-  final String? variantDescription;
-  final String? description;
-  final String? modified;
-  final String? isbn;
-  final String? upc;
-  final String? diamondCode;
-  final String? ean;
-  final String? issn;
-  final String? format;
-  final int? pageCount;
-  final List<TextObjects>? textObjects;
-  final String? resourceURI;
-  final List<Urls>? urls;
-  final Series? series;
-  final List<Series>? variants;
-  final List<Dates>? dates;
-  final List<Prices>? prices;
-  final Thumbnail? thumbnail;
-  final List<Thumbnail>? images;
-  final Creators? creators;
-  final Creators? characters;
-  final Creators? stories;
-  final Creators? events;
+  final int id;
+  final int digitalId;
+  final String title;
+  final int issueNumber;
+  final String variantDescription;
+  final String description;
+  final String modified;
+  final String isbn;
+  final String upc;
+  final String diamondCode;
+  final String ean;
+  final String issn;
+  final String format;
+  final int pageCount;
+  final List<TextObjects> textObjects;
+  final String resourceURI;
+  final List<Urls> urls;
+  final Series series;
+  final List<Series> variants;
+  final List<Dates> dates;
+  final List<Prices> prices;
+  final Thumbnail thumbnail;
+  final List<Thumbnail> images;
+  final ListType2 creators;
+  final ListType2 characters;
+  final ListType2 stories;
+  final ListType2 events;
 
   ResultComic(
       {required this.id,
@@ -80,8 +80,7 @@ class ResultComic {
         urls!.add(new Urls.fromMap(v));
       });
     }
-    var series =
-        json['series'] != null ? new Series.fromMap(json['series']) : null;
+    var series = Series.fromMap(json['series']);
     var variants = <Series>[];
     if (json['variants'] != null) {
       json['variants'].forEach((v) {
@@ -101,25 +100,18 @@ class ResultComic {
         prices!.add(new Prices.fromMap(v));
       });
     }
-    var thumbnail = json['thumbnail'] != null
-        ? new Thumbnail.fromMap(json['thumbnail'])
-        : null;
+    var thumbnail = Thumbnail.fromMap(json['thumbnail']);
+
     var images = <Thumbnail>[];
     if (json['images'] != null) {
       json['images'].forEach((v) {
         images!.add(Thumbnail.fromMap(v));
       });
     }
-    var creators = json['creators'] != null
-        ? new Creators.fromMap(json['creators'])
-        : null;
-    var characters = json['characters'] != null
-        ? new Creators.fromMap(json['characters'])
-        : null;
-    var stories =
-        json['stories'] != null ? new Creators.fromMap(json['stories']) : null;
-    var events =
-        json['events'] != null ? new Creators.fromMap(json['events']) : null;
+    var creators = ListType2.fromMap(json['creators']);
+    var characters = new ListType2.fromMap(json['characters']);
+    var stories = ListType2.fromMap(json['stories']);
+    var events = ListType2.fromMap(json['events']);
     return ResultComic(
         id: json['id'],
         digitalId: json['digitalId'],
