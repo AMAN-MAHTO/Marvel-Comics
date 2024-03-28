@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_api/models/result_character.dart';
+import 'package:marvel_api/models/result_comic.dart';
 import 'package:marvel_api/provider/data_provider.dart';
 import 'package:marvel_api/services/marvel_api_impl.dart';
 import 'package:provider/provider.dart';
 
-class CharacterScreen extends StatefulWidget {
+class ComicScreen extends StatefulWidget {
   final String id;
-  const CharacterScreen({super.key, required this.id});
+  const ComicScreen({super.key, required this.id});
 
   @override
-  State<CharacterScreen> createState() => _CharacterScreenState();
+  State<ComicScreen> createState() => _ComicScreenState();
 }
 
-class _CharacterScreenState extends State<CharacterScreen> {
-  ResultCharacter? character;
+class _ComicScreenState extends State<ComicScreen> {
+  ResultComic? comic;
 
   @override
   Widget build(BuildContext context) {
     var dataProvider = Provider.of<DataProvider>(context);
-    if (dataProvider.characterList.length == 0) {
-      dataProvider.updateCharacterList();
+    if (dataProvider.comicsList.length == 0) {
+      dataProvider.updateComicsList();
     }
-    character = dataProvider.characterList
+    comic = dataProvider.comicsList
         .where((element) => element.id.toString() == widget.id)
         .toList()[0];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(character!.name),
+        title: Text(comic!.title!),
       ),
-      body: character == null
+      body: comic == null
           ? LinearProgressIndicator()
-          : Center(child: Text(character!.name)),
+          : Center(child: Text(comic!.description!)),
     );
   }
 }

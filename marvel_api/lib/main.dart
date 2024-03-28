@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marvel_api/provider/data_provider.dart';
 import 'package:marvel_api/provider/theme_changer_provider.dart';
 import 'package:marvel_api/routing.dart';
 import 'package:marvel_api/screens/character_list_screen.dart';
@@ -12,6 +13,7 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => ThemeChangerProvider()),
+      ChangeNotifierProvider(create: (_) => DataProvider()),
     ],
     child: const MainApp(),
   ));
@@ -22,6 +24,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+
     return Builder(builder: (context) {
       var themeChanger = Provider.of<ThemeChangerProvider>(context);
       return MaterialApp(
