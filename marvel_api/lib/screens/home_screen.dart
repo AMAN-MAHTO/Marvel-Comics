@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:marvel_api/provider/theme_changer_provider.dart';
 import 'package:marvel_api/screens/character/character_list_screen.dart';
 import 'package:marvel_api/screens/comic/comics_list_screen.dart';
 import 'package:marvel_api/screens/event/event_list_screen.dart';
 import 'package:marvel_api/screens/theme_changer_screen.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,8 +23,28 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    var themeChanger = Provider.of<ThemeChangerProvider>(context);
+    late var themeIcon;
+    if (themeChanger.theme == ThemeMode.light) {
+      themeIcon = Icons.light_mode;
+    } else {
+      themeIcon = Icons.dark_mode;
+    }
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                if (themeChanger.theme == ThemeMode.light) {
+                  themeChanger.setTheme(ThemeMode.dark);
+                  themeIcon = Icons.dark_mode;
+                } else {
+                  themeChanger.setTheme(ThemeMode.light);
+                  themeIcon = Icons.light_mode;
+                }
+              },
+              icon: Icon(themeIcon))
+        ],
         title: Text(titles[currentPageIndex]),
       ),
       bottomNavigationBar: NavigationBar(

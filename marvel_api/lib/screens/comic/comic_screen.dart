@@ -18,6 +18,7 @@ class _ComicScreenState extends State<ComicScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('build comic widget');
     var dataProvider = Provider.of<DataProvider>(context);
     if (dataProvider.comicsList.length == 0) {
       dataProvider.updateComicsList();
@@ -32,7 +33,7 @@ class _ComicScreenState extends State<ComicScreen> {
       ),
       body: comic == null
           ? LinearProgressIndicator()
-          : Center(child: Text(comic!.description!)),
+          : Center(child: Text(comic?.description?? "")),
     );
   }
 }

@@ -13,7 +13,7 @@ class EventListScreen extends StatefulWidget {
 class _EventListScreenState extends State<EventListScreen> {
   @override
   Widget build(BuildContext context) {
-    print('build character widget');
+    print('build event list widget');
     var dataProvider = Provider.of<DataProvider>(context);
     if (dataProvider.eventsList.length == 0) {
       dataProvider.updateEventsList();

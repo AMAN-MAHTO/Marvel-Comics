@@ -29,12 +29,6 @@ class _ThemeChangerScreenState extends State<ThemeChangerScreen> {
             groupValue: themeChanger.theme,
             onChanged: themeChanger.setTheme,
           ),
-          RadioListTile(
-            title: Text("System Mode"),
-            value: ThemeMode.system,
-            groupValue: themeChanger.theme,
-            onChanged: themeChanger.setTheme,
-          ),
         ],
       ),
     );

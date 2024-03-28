@@ -14,7 +14,7 @@ class ComicsListScreen extends StatefulWidget {
 class _ComicsListScreenState extends State<ComicsListScreen> {
   @override
   Widget build(BuildContext context) {
-    print('build comic widget');
+    print('build comic list widget');
     var dataProvider = Provider.of<DataProvider>(context);
     if (dataProvider.comicsList.length == 0) {
       dataProvider.updateComicsList();
