@@ -1,3 +1,4 @@
+import 'package:marvel_api/models/items2.dart';
 import 'package:marvel_api/models/list_type1.dart';
 import 'package:marvel_api/models/list_type2.dart';
 import 'package:marvel_api/models/thumbnail.dart';
@@ -6,7 +7,7 @@ import 'package:marvel_api/models/urls.dart';
 class ResultCreator {
   final int? id;
   final String? title;
-  final Null? description;
+  final String? description;
   final String? resourceURI;
   final List<Urls>? urls;
   final int? startYear;
@@ -20,8 +21,8 @@ class ResultCreator {
   final ListType2? stories;
   final ListType1? comics;
   final ListType2? events;
-  final Null? next;
-  final Null? previous;
+  final Items2? next;
+  final Items2? previous;
 
   ResultCreator(
       {required this.id,
@@ -50,7 +51,9 @@ class ResultCreator {
         urls!.add(new Urls.fromMap(v));
       });
     }
-
+    var next = json['next'] == null ? null : Items2.fromMap(json['next']);
+    var previous =
+        json['previous'] == null ? null : Items2.fromMap(json['previous']);
     var thumbnail =
         json['thumbnail'] == null ? null : Thumbnail.fromMap(json['thumbnail']);
     var creators =
@@ -82,7 +85,7 @@ class ResultCreator {
         stories: stories,
         comics: comics,
         events: events,
-        next: json['next'],
-        previous: json['previous']);
+        next: next,
+        previous: previous);
   }
 }

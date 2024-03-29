@@ -14,6 +14,9 @@ class _ThemeChangerScreenState extends State<ThemeChangerScreen> {
   Widget build(BuildContext context) {
     var themeChanger = Provider.of<ThemeChangerProvider>(context);
     return Scaffold(
+      appBar: AppBar(
+        title: Text("S E T T I N G S"),
+      ),
       body: Column(
         children: [
           Text("Themes"),

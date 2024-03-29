@@ -19,16 +19,15 @@ class _HomeScreenState extends State<HomeScreen> {
     'C H A R A C T E R S',
     'C O M I C S',
     'E V E N T S',
-    'S E T T I N G'
   ];
   @override
   Widget build(BuildContext context) {
     var themeChanger = Provider.of<ThemeChangerProvider>(context);
     late var themeIcon;
     if (themeChanger.theme == ThemeMode.light) {
-      themeIcon = Icons.light_mode;
+      themeIcon = Icons.light_mode_outlined;
     } else {
-      themeIcon = Icons.dark_mode;
+      themeIcon = Icons.dark_mode_outlined;
     }
     return Scaffold(
       appBar: AppBar(
@@ -37,15 +36,63 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 if (themeChanger.theme == ThemeMode.light) {
                   themeChanger.setTheme(ThemeMode.dark);
-                  themeIcon = Icons.dark_mode;
+                  themeIcon = Icons.dark_mode_outlined;
                 } else {
                   themeChanger.setTheme(ThemeMode.light);
-                  themeIcon = Icons.light_mode;
+                  themeIcon = Icons.light_mode_outlined;
                 }
               },
               icon: Icon(themeIcon))
         ],
         title: Text(titles[currentPageIndex]),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(child: Text("Header")),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text("Home"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.library_books),
+              title: Text("Series"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/series_list');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.auto_stories),
+              title: Text("Stories"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/stories_list');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.emoji_objects),
+              title: Text("Creators"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/creators_list');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text("Settings"),
+              onTap: () {
+                Navigator.pop(context);
+
+                Navigator.pushNamed(context, '/settings');
+              },
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
@@ -60,7 +107,6 @@ class _HomeScreenState extends State<HomeScreen> {
         CharacterListScreen(),
         ComicsListScreen(),
         EventListScreen(),
-        ThemeChangerScreen(),
       ][currentPageIndex],
     );
   }
@@ -81,11 +127,6 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedIcon: Icon(Icons.event),
         icon: Icon(Icons.event_outlined),
         label: 'Events',
-      ),
-      NavigationDestination(
-        selectedIcon: Icon(Icons.settings),
-        icon: Icon(Icons.settings_outlined),
-        label: 'Settings',
       ),
     ];
   }

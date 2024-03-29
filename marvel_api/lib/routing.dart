@@ -3,9 +3,16 @@ import 'package:marvel_api/screens/character/character_list_screen.dart';
 import 'package:marvel_api/screens/character/character_screen.dart';
 import 'package:marvel_api/screens/comic/comic_screen.dart';
 import 'package:marvel_api/screens/comic/comics_list_screen.dart';
+import 'package:marvel_api/screens/creator/creator_list_screen.dart';
+import 'package:marvel_api/screens/creator/creator_screen.dart';
 import 'package:marvel_api/screens/event/event_list_screen.dart';
 import 'package:marvel_api/screens/event/event_screen.dart';
 import 'package:marvel_api/screens/home_screen.dart';
+import 'package:marvel_api/screens/series/series_list_screen.dart';
+import 'package:marvel_api/screens/series/series_screen.dart';
+import 'package:marvel_api/screens/stories/stories_list_screen.dart';
+import 'package:marvel_api/screens/stories/stories_screen.dart';
+import 'package:marvel_api/screens/theme_changer_screen.dart';
 
 class RoutGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -14,7 +21,7 @@ class RoutGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => HomeScreen());
-      case '/characters':
+      case '/characters_list':
         return MaterialPageRoute(builder: (_) => CharacterListScreen());
 
       case '/character':
@@ -22,7 +29,7 @@ class RoutGenerator {
           return MaterialPageRoute(builder: (_) => CharacterScreen(id: args));
         } else
           return _errorRoute();
-      case '/comics':
+      case '/comics_list':
         return MaterialPageRoute(builder: (_) => ComicsListScreen());
 
       case '/comic':
@@ -31,7 +38,7 @@ class RoutGenerator {
         } else
           return _errorRoute();
 
-      case '/events':
+      case '/events_list':
         return MaterialPageRoute(builder: (_) => EventListScreen());
 
       case '/event':
@@ -39,6 +46,34 @@ class RoutGenerator {
           return MaterialPageRoute(builder: (_) => EventScreen(id: args));
         } else
           return _errorRoute();
+
+      case '/series_list':
+        return MaterialPageRoute(builder: (_) => SeriesListScreen());
+      case '/series':
+        if (args is String) {
+          return MaterialPageRoute(builder: (_) => SeriesScreen(id: args));
+        } else
+          return _errorRoute();
+
+      case '/stories_list':
+        return MaterialPageRoute(builder: (_) => StoriesListScreen());
+
+      case '/storie':
+        if (args is String) {
+          return MaterialPageRoute(builder: (_) => StorieScreen(id: args));
+        } else
+          return _errorRoute();
+
+      case '/creators_list':
+        return MaterialPageRoute(builder: (_) => CreatorListScreen());
+      case '/creator':
+        if (args is String) {
+          return MaterialPageRoute(builder: (_) => CreatorScreen(id: args));
+        } else
+          return _errorRoute();
+
+      case '/settings':
+        return MaterialPageRoute(builder: (_) => ThemeChangerScreen());
 
       default:
         return _errorRoute();
