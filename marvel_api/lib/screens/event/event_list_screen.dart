@@ -1,46 +1,87 @@
 import 'package:flutter/material.dart';
-
 import 'package:marvel_api/provider/data_provider.dart';
 import 'package:provider/provider.dart';
 
 class EventListScreen extends StatefulWidget {
-  const EventListScreen({super.key});
+  const EventListScreen({Key? key}) : super(key: key);
 
   @override
-  State<EventListScreen> createState() => _EventListScreenState();
+  _EventListScreenState createState() => _EventListScreenState();
 }
 
-class _EventListScreenState extends State<EventListScreen> {
+class _EventListScreenState extends State<EventListScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<Offset> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 500), // Set animation duration
+    );
+    _animation = Tween<Offset>(
+      begin: Offset(0.0, 1.0), // Start from below the screen
+      end: Offset.zero, // End at the initial position
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOut, // Choose your desired curve
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('build event list widget');
     var dataProvider = Provider.of<DataProvider>(context);
-    if (dataProvider.eventsList.length == 0) {
+    if (dataProvider.eventsList.isEmpty) {
       dataProvider.updateEventsList();
     }
 
     return Scaffold(
-        body: Consumer<DataProvider>(builder: (context, value, child) {
-      return value.eventsList.length == 0
-          ? LinearProgressIndicator()
-          : character_list(value);
-    }));
+      appBar: AppBar(
+        title: Text('Events List'),
+      ),
+      body: dataProvider.eventsList.isEmpty
+          ? Center(child: CircularProgressIndicator())
+          : SlideTransition(
+              position: _animation,
+              child: ListView.builder(
+                itemCount: dataProvider.eventsList.length,
+                itemBuilder: (context, index) {
+                  var event = dataProvider.eventsList[index];
+                  return Card(
+                    elevation: 4,
+                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    child: ListTile(
+                      leading: Image.network(event.thumbnail!.imgUrl()),
+                      title: Text(event.id.toString()),
+                      subtitle: Text(event.description ?? ''),
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/event',
+                          arguments: event.id.toString(),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+    );
   }
 
-  ListView character_list(DataProvider value) {
-    return ListView.builder(
-        itemCount: value.eventsList.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: Image.network(value.eventsList[index].thumbnail!.imgUrl()),
-            title: Text(value.eventsList[index].id.toString()),
-            subtitle: Text(value.eventsList[index]!.description!),
-            onTap: () {
-              print(value.eventsList[index].id.toString());
-              Navigator.pushNamed(context, '/event',
-                  arguments: value.eventsList[index].id.toString());
-            },
-          );
-        });
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _animationController.forward(); // Start the animation when the screen is shown
   }
 }

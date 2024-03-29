@@ -30,7 +30,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
       ),
       body: character == null
           ? LinearProgressIndicator()
-          : Center(child: Text(character!.name!)),
+          : Card(child: Text(character!.description!, style: TextStyle(fontSize: 25),))
     );
   }
 }
