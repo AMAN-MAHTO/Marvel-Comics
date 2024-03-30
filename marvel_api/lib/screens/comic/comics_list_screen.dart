@@ -44,35 +44,63 @@ class _ComicsListScreenState extends State<ComicsListScreen>
       appBar: AppBar(
         title: Text('Comics List'),
       ),
+      
       body: dataProvider.comicsList.isEmpty
           ? Center(child: CircularProgressIndicator())
           : SlideTransition(
               position: _animation,
-              child: ListView(
-                padding: EdgeInsets.all(8),
-                children: dataProvider.comicsList.map((comic) {
-                  return Card(
-                    elevation: 4,
-                    margin: EdgeInsets.symmetric(vertical: 8),
-                    child: ListTile(
-                      leading: Image.network(
-                        comic.thumbnail!.imgUrl(),
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
+              child: ListView.builder(
+                itemCount: dataProvider.comicsList.length,
+                itemBuilder: (context, index) {
+                  var comic = dataProvider.comicsList[index];
+                  return SlideTransition(
+                    position: _animation,
+                    child: Card(
+                      elevation: 4,
+                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      title: Text(comic.title ?? ''),
-                      subtitle: Text(comic.prices.toString()),
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          '/comic',
-                          arguments: comic.id.toString(),
-                        );
-                      },
+                      color: Colors.transparent, // Transparent color for the card
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color.fromARGB(255, 255, 17, 0),
+                              Color.fromARGB(199, 211, 7, 7),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: ListTile(
+                          leading: Image.network(comic.thumbnail!.imgUrl()),
+                          title: Text(
+                            comic.title ?? '',
+                            style: TextStyle(
+                              color: Colors.white, // Change text color to white
+                              fontWeight: FontWeight.bold, // Optional: Adjust font weight
+                            ),
+                          ),
+                          subtitle: Text(
+                            comic.prices.toString(),
+                            style: TextStyle(
+                              color: Colors.white70, // Change text color to a lighter shade of white
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/comic',
+                              arguments: comic.id.toString(),
+                            );
+                          },
+                        ),
+                      ),
                     ),
                   );
-                }).toList(),
+                },
               ),
             ),
     );
