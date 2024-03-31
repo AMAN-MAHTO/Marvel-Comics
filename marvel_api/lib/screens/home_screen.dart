@@ -73,7 +73,17 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: Drawer(
         child: ListView(
           children: [
-            DrawerHeader(child: Text("Header")),
+            DrawerHeader(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                image: AssetImage("assets/images/header.png"),
+                fit: BoxFit.cover,
+              )),
+              child: Text(
+                "Marvel Comics",
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
             ListTile(
               leading: Icon(Icons.home),
               title: Text(

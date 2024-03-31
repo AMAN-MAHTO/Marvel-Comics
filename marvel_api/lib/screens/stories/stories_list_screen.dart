@@ -66,7 +66,7 @@ class _StoriesListScreenState extends State<StoriesListScreen>
                             onTap: () {
                               Navigator.pushNamed(
                                 context,
-                                '/comic',
+                                '/storie',
                                 arguments: stories.id.toString(),
                               );
                             },
