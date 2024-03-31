@@ -33,7 +33,7 @@ class _ComicScreenState extends State<ComicScreen> {
       ),
       body: comic == null
           ? LinearProgressIndicator()
-          : Center(child: Text(comic?.description?? "")),
+          : Center(child: Text(comic?.description ?? "")),
     );
   }
 }
