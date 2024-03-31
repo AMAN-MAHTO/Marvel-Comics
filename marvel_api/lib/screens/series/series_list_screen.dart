@@ -76,8 +76,6 @@ class _SeriesListScreenState extends State<SeriesListScreen>
                                 ListTile(
                                   title: Text(
                                     series.title!,
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                 )
                               ],

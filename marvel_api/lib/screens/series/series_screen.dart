@@ -23,14 +23,21 @@ class _SeriesScreenState extends State<SeriesScreen> {
     series = dataProvider.seriesList
         .where((element) => element.id.toString() == widget.id)
         .toList()[0];
+return Scaffold(
+  appBar: AppBar(
+    title: Text(series?.title ?? 'Series Title'),
+    leading: IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    ),
+  ),
+  body: series == null
+      ? LinearProgressIndicator()
+      : Center(child: Text(series!.rating ?? 'Rating not available')),
+);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(series!.title!.toString()),
-      ),
-      body: series == null
-          ? LinearProgressIndicator()
-          : Center(child: Text(series!.rating!)),
-    );
+
   }
 }
