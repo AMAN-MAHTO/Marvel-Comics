@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_api/provider/data_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class ComicsListScreen extends StatefulWidget {
   const ComicsListScreen({Key? key}) : super(key: key);
@@ -47,35 +48,49 @@ class _ComicsListScreenState extends State<ComicsListScreen>
       
       body: dataProvider.comicsList.isEmpty
           ? Center(child: CircularProgressIndicator())
-          : SlideTransition(
+                    :SlideTransition(
   position: _animation,
-  child: ListView.builder(
-    itemCount: dataProvider.eventsList.length,
+  child: MasonryGridView.builder(
+    gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 2,
+    ),
+    itemCount: dataProvider.comicsList.length,
     itemBuilder: (context, index) {
-      var comic= dataProvider.comicsList[index];
-      return SlideTransition(
-        position: _animation,
-        child: Card(
-          elevation: 4,
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          child: Column(
-            children: [
-              Image.network(comic.thumbnail!.imgUrl()),
-              ListTile(
-                title: Text(comic.title.toString()), // Convert event id to string
-                subtitle: Text(comic.description ?? ''),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/event',
-                    arguments: comic.id.toString(),
-                  );
-                },
-              )
-            ],
+      // Check if the index is within the bounds of the comics list
+      if (index < dataProvider.comicsList.length) {
+        var comic = dataProvider.comicsList[index];
+        return SlideTransition(
+          position: _animation,
+          child: Card(
+            elevation: 4,
+            clipBehavior: Clip.hardEdge,
+            margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  '/character',
+                  arguments: comic.id.toString(),
+                );
+              },
+              child: Column(
+                children: [
+                  Image.network(comic.thumbnail!.imgUrl()),
+                  ListTile(
+                    title: Text(
+                      comic.title!,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
-      );
+        );
+      } else {
+        // If the index is out of range, return an empty container
+        return Container();
+      }
     },
   ),
 ),);}

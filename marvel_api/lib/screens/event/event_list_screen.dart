@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_api/provider/data_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class EventListScreen extends StatefulWidget {
   const EventListScreen({Key? key}) : super(key: key);
@@ -46,37 +47,47 @@ class _EventListScreenState extends State<EventListScreen>
       body: dataProvider.eventsList.isEmpty
           ? Center(child: CircularProgressIndicator())
           : SlideTransition(
-  position: _animation,
-  child: ListView.builder(
-    itemCount: dataProvider.eventsList.length,
-    itemBuilder: (context, index) {
-      var event = dataProvider.eventsList[index];
-      return SlideTransition(
-        position: _animation,
-        child: Card(
-          elevation: 4,
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          child: Column(
-            children: [
-              Image.network(event.thumbnail!.imgUrl()),
-              ListTile(
-                title: Text(event.id.toString()), // Convert event id to string
-                subtitle: Text(event.description ?? ''),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/event',
-                    arguments: event.id.toString(),
+              position: _animation,
+              child: MasonryGridView.builder(
+                gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    
+                    ),
+                itemCount: dataProvider.eventsList.length,
+                itemBuilder: (context, index) {
+                  var events = dataProvider.eventsList[index];
+                  return SlideTransition(
+                    position: _animation,
+                    child: Card(
+                        elevation: 4,
+                        clipBehavior: Clip.hardEdge,
+                        margin:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/character',
+                              arguments: events.id.toString(),
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              Image.network(events.thumbnail!.imgUrl()),
+                              ListTile(
+                                title: Text(
+                                  events.title!,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                              )
+                            ],
+                          ),
+                        )),
                   );
                 },
-              )
-            ],
-          ),
-        ),
-      );
-    },
-  ),
-),);}
+              ),
+            ),);}
 
 
   @override

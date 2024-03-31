@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:marvel_api/provider/data_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class CharacterListScreen extends StatefulWidget {
   const CharacterListScreen({Key? key}) : super(key: key);
@@ -50,8 +50,9 @@ class _CharacterListScreenState extends State<CharacterListScreen>
               position: _animation,
               child: MasonryGridView.builder(
                 gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
+                    crossAxisCount: 2,
+                    
+                    ),
                 itemCount: dataProvider.characterList.length,
                 itemBuilder: (context, index) {
                   var character = dataProvider.characterList[index];
@@ -60,6 +61,8 @@ class _CharacterListScreenState extends State<CharacterListScreen>
                     child: Card(
                         elevation: 4,
                         clipBehavior: Clip.hardEdge,
+                        margin:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                         child: InkWell(
                           onTap: () {
                             Navigator.pushNamed(
@@ -84,10 +87,7 @@ class _CharacterListScreenState extends State<CharacterListScreen>
                   );
                 },
               ),
-            ),
-    );
-  }
-
+            ),);}
   @override
   void dispose() {
     _animationController.dispose();
@@ -97,7 +97,6 @@ class _CharacterListScreenState extends State<CharacterListScreen>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _animationController
-        .forward(); // Start the animation when the screen is shown
+    _animationController.forward(); // Start the animation when the screen is shown
   }
 }

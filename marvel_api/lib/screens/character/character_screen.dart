@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class CharacterScreen extends StatefulWidget {
   final String id;
-  const CharacterScreen({super.key, required this.id});
+  const CharacterScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   State<CharacterScreen> createState() => _CharacterScreenState();
@@ -17,20 +17,55 @@ class _CharacterScreenState extends State<CharacterScreen> {
   @override
   Widget build(BuildContext context) {
     var dataProvider = Provider.of<DataProvider>(context);
-    if (dataProvider.characterList.length == 0) {
+    if (dataProvider.characterList.isEmpty) {
       dataProvider.updateCharacterList();
     }
     character = dataProvider.characterList
-        .where((element) => element.id.toString() == widget.id)
-        .toList()[0];
+        .firstWhere((element) => element.id.toString() == widget.id);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(character!.name!),
+        title: Text(character?.name ?? 'Character Details'),
       ),
       body: character == null
-          ? LinearProgressIndicator()
-          : Card(child: Text(character!.description!, style: TextStyle(fontSize: 25),))
+          ? Center(child: CircularProgressIndicator())
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Comics',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(
+                  height: 200, // Adjust the height of the horizontal list as needed
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: character!.comics!.length,
+                    itemBuilder: (context, index) {
+                      var comic = character!.comics!.items![index];
+                      return SizedBox(
+                        width: 150, // Adjust the width of each item as needed
+                        child: Card(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //Image.network(comic.thumbnail!.imgUrl()),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(comic.name!),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }
