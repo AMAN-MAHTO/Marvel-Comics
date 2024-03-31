@@ -45,32 +45,40 @@ class _StoriesListScreenState extends State<StoriesListScreen>
       ),
       body: dataProvider.storiesList.isEmpty
           ? Center(child: CircularProgressIndicator())
-          : SlideTransition(
-              position: _animation,
-              child: ListView.builder(
-                itemCount: dataProvider.storiesList.length,
-                itemBuilder: (context, index) {
-                  var story = dataProvider.storiesList[index];
-                  return Card(
-                    elevation: 4,
-                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: ListTile(
-                      title: Text(story.title!),
-                      subtitle: Text(story.description!),
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          '/storie',
-                          arguments: story.id.toString(),
-                        );
-                      },
-                    ),
+        : SlideTransition(
+  position: _animation,
+  child: ListView.builder(
+    itemCount: dataProvider.storiesList.length,
+    itemBuilder: (context, index) {
+      var story = dataProvider.storiesList[index];
+      return SlideTransition(
+        position: _animation,
+        child: Card(
+          elevation: 4,
+          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: Column(
+            children: [
+              if (story.thumbnail != null)
+                Image.network(story.thumbnail!.imgUrl()),
+              ListTile(
+                title: Text(story.title ?? ''),
+                subtitle: Text(story.description ?? ''),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/stories',
+                    arguments: story.id.toString(),
                   );
                 },
-              ),
-            ),
-    );
-  }
+              )
+            ],
+          ),
+        ),
+      );
+    },
+  ),
+),);}
+
 
   @override
   void dispose() {
