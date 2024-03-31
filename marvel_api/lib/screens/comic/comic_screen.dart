@@ -25,49 +25,81 @@ class _ComicScreenState extends State<ComicScreen> {
         .firstWhere((element) => element.id.toString() == widget.id);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(comic?.title ?? ''),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(
-              clipBehavior: Clip.hardEdge,
-              child: Column(
-                children: [
-                  Image.network(
-                    comic?.thumbnail?.imgUrl() ?? '', 
-                    fit: BoxFit.cover,
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Image.network(
+                  comic!.thumbnail!.imgUrl(),
+                  fit: BoxFit.cover,
+                ),
+                Container(
+                  color: Colors.red,
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    comic!.title!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            child: comic == null
-                ? LinearProgressIndicator()
-                : ListView.builder(
+                ),
+                SizedBox(height: 16), // Add some spacing between the text and the list
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "COMIC LIST",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                // Comic list
+                if (comic != null)
+                  ListView.builder(
+                    shrinkWrap: true,
                     itemCount: dataProvider.comicsList.length,
                     itemBuilder: (context, index) {
                       var currentComic = dataProvider.comicsList[index];
-                      return ListTile(
-                        title: Text(currentComic.title !),
-                        subtitle: Text(currentComic.description !),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ComicScreen(
-                                id: currentComic.id.toString(),
-                              ),
-                            ),
-                          );
-                        },
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          elevation: 4,
+                          child: ListTile(
+                            title: Text(currentComic.title!),
+                            subtitle: Text(currentComic.description ?? ""),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ComicScreen(
+                                    id: currentComic.id.toString(),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
                       );
                     },
                   ),
+              ],
+            ),
+          ),
+          Align(
+            alignment: Alignment(-1, -.95),
+            child: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back),
+            ),
           ),
         ],
       ),

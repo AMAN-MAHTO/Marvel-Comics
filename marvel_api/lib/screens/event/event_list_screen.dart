@@ -77,8 +77,6 @@ class _EventListScreenState extends State<EventListScreen>
                                   ListTile(
                                     title: Text(
                                       event.title!,
-                                      style:
-                                          Theme.of(context).textTheme.titleMedium,
                                     ),
                                   )
                                 ],

@@ -72,7 +72,6 @@ class _StoriesListScreenState extends State<StoriesListScreen>
                             },
                             child: Column(
                               children: [
-                                Image.network(stories.thumbnail!.imgUrl()),
                                 ListTile(
                                   title: Text(
                                     stories.title!,

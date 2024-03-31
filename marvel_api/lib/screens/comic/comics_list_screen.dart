@@ -78,9 +78,6 @@ class _ComicsListScreenState extends State<ComicsListScreen>
                                   ListTile(
                                     title: Text(
                                       comic.title!,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium,
                                     ),
                                   )
                                 ],

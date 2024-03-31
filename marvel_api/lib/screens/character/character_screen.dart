@@ -24,48 +24,106 @@ class _CharacterScreenState extends State<CharacterScreen> {
         .firstWhere((element) => element.id.toString() == widget.id);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(character?.name ?? 'Character Details'),
-      ),
-      body: character == null
-          ? Center(child: CircularProgressIndicator())
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                Image.network(
+                  character!.thumbnail!.imgUrl(),
+                  fit: BoxFit.cover,
+                ),
+                Container(
+                  color: Colors.red,
+                  padding: EdgeInsets.all(8),
+                  child: Column(
+                    children: [
+                      Text(
+                        character!.name!,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: 8), // Add some spacing between the name and the description
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.red[100], // Light red shade
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          character!.description?.isNotEmpty ?? false
+                              ? character!.description!
+                              : "No Description Available",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 16), // Add some spacing between the description and the comic list
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Comics',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    "COMIC LIST",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                SizedBox(
-                  height: 200, // Adjust the height of the horizontal list as needed
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: character!.comics!.length,
+                // Comic list
+                if (character != null)
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(), // Disable scrolling of the list
+                    itemCount: dataProvider.comicsList.length,
                     itemBuilder: (context, index) {
-                      var comic = character!.comics!.items![index];
-                      return SizedBox(
-                        width: 150, // Adjust the width of each item as needed
+                      var currentComic = dataProvider.comicsList[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Card(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              //Image.network(comic.thumbnail!.imgUrl()),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(comic.name!),
-                              ),
-                            ],
+                          elevation: 4,
+                          child: ListTile(
+                            title: Text(currentComic.title!),
+                            subtitle: Text(currentComic.description ?? ""),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CharacterScreen(
+                                    id: currentComic.id.toString(),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       );
                     },
                   ),
-                ),
               ],
             ),
+          ),
+          Align(
+            alignment: Alignment(-1, -.95),
+            child: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -73,8 +73,6 @@ class _CharacterListScreenState extends State<CharacterListScreen>
                                 ListTile(
                                   title: Text(
                                     character.name!,
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                 )
                               ],
