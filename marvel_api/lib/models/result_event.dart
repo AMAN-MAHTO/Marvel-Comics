@@ -81,4 +81,6 @@ class ResultEvent {
         next: next,
         previous: previous);
   }
+
+  get name => null;
 }

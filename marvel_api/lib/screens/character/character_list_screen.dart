@@ -56,45 +56,21 @@ class _CharacterListScreenState extends State<CharacterListScreen>
                     child: Card(
                       elevation: 4,
                       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      color: Colors.transparent, // Transparent color for the card
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(255, 255, 17, 0),
-                              Color.fromARGB(199, 211, 7, 7),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: ListTile(
-                          leading: Image.network(character.thumbnail!.imgUrl()),
-                          title: Text(
-                            character.name ?? '',
-                            style: TextStyle(
-                              color: Colors.white, // Change text color to white
-                              fontWeight: FontWeight.bold, // Optional: Adjust font weight
-                            ),
-                          ),
-                          subtitle: Text(
-                            character.description ?? '',
-                            style: TextStyle(
-                              color: Colors.white70, // Change text color to a lighter shade of white
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/character',
-                              arguments: character.id.toString(),
-                            );
-                          },
-                        ),
+                      child: Column(
+                        children: [
+                          Image.network(character.thumbnail!.imgUrl()),
+                          ListTile(
+                            title: Text(character.name!),
+                            subtitle: Text(character.description!.toString()),
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/character',
+                                arguments: character.id.toString(),
+                              );
+                            },
+                          )
+                        ],
                       ),
                     ),
                   );

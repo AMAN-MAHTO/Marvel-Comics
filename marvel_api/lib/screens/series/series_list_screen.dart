@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marvel_api/models/series.dart';
 import 'package:marvel_api/provider/data_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -45,32 +46,37 @@ class _SeriesListScreenState extends State<SeriesListScreen>
       body: dataProvider.seriesList.isEmpty
           ? Center(child: CircularProgressIndicator())
           : SlideTransition(
-              position: _animation,
-              child: ListView.builder(
-                itemCount: dataProvider.seriesList.length,
-                itemBuilder: (context, index) {
-                  var series = dataProvider.seriesList[index];
-                  return Card(
-                    elevation: 4,
-                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: ListTile(
-                      leading: Image.network(series.thumbnail!.imgUrl()),
-                      title: Text(series.title!),
-                      subtitle: Text(series.startYear!.toString()),
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          '/series',
-                          arguments: series.id.toString(),
-                        );
-                      },
-                    ),
+  position: _animation,
+  child: ListView.builder(
+    itemCount: dataProvider.seriesList.length,
+    itemBuilder: (context, index) {
+      var series = dataProvider.seriesList[index];
+      return SlideTransition(
+        position: _animation,
+        child: Card(
+          elevation: 4,
+          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: Column(
+            children: [
+              Image.network(series.thumbnail!.imgUrl()),
+              ListTile(
+                title: Text(series.title ?? ''),
+                subtitle: Text(series.description ?? ''),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/series',
+                    arguments: series.id.toString(),
                   );
                 },
-              ),
-            ),
-    );
-  }
+              )
+            ],
+          ),
+        ),
+      );
+    },
+  ),
+),);}
 
   @override
   void dispose() {
@@ -78,3 +84,4 @@ class _SeriesListScreenState extends State<SeriesListScreen>
     super.dispose();
   }
 }
+

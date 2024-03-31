@@ -46,32 +46,38 @@ class _EventListScreenState extends State<EventListScreen>
       body: dataProvider.eventsList.isEmpty
           ? Center(child: CircularProgressIndicator())
           : SlideTransition(
-              position: _animation,
-              child: ListView.builder(
-                itemCount: dataProvider.eventsList.length,
-                itemBuilder: (context, index) {
-                  var event = dataProvider.eventsList[index];
-                  return Card(
-                    elevation: 4,
-                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: ListTile(
-                      leading: Image.network(event.thumbnail!.imgUrl()),
-                      title: Text(event.id.toString()),
-                      subtitle: Text(event.description ?? ''),
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          '/event',
-                          arguments: event.id.toString(),
-                        );
-                      },
-                    ),
+  position: _animation,
+  child: ListView.builder(
+    itemCount: dataProvider.eventsList.length,
+    itemBuilder: (context, index) {
+      var event = dataProvider.eventsList[index];
+      return SlideTransition(
+        position: _animation,
+        child: Card(
+          elevation: 4,
+          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: Column(
+            children: [
+              Image.network(event.thumbnail!.imgUrl()),
+              ListTile(
+                title: Text(event.id.toString()), // Convert event id to string
+                subtitle: Text(event.description ?? ''),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/event',
+                    arguments: event.id.toString(),
                   );
                 },
-              ),
-            ),
-    );
-  }
+              )
+            ],
+          ),
+        ),
+      );
+    },
+  ),
+),);}
+
 
   @override
   void dispose() {

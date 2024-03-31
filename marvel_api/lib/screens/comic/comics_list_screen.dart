@@ -48,64 +48,37 @@ class _ComicsListScreenState extends State<ComicsListScreen>
       body: dataProvider.comicsList.isEmpty
           ? Center(child: CircularProgressIndicator())
           : SlideTransition(
-              position: _animation,
-              child: ListView.builder(
-                itemCount: dataProvider.comicsList.length,
-                itemBuilder: (context, index) {
-                  var comic = dataProvider.comicsList[index];
-                  return SlideTransition(
-                    position: _animation,
-                    child: Card(
-                      elevation: 4,
-                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      color: Colors.transparent, // Transparent color for the card
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(255, 255, 17, 0),
-                              Color.fromARGB(199, 211, 7, 7),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: ListTile(
-                          leading: Image.network(comic.thumbnail!.imgUrl()),
-                          title: Text(
-                            comic.title ?? '',
-                            style: TextStyle(
-                              color: Colors.white, // Change text color to white
-                              fontWeight: FontWeight.bold, // Optional: Adjust font weight
-                            ),
-                          ),
-                          subtitle: Text(
-                            comic.prices.toString(),
-                            style: TextStyle(
-                              color: Colors.white70, // Change text color to a lighter shade of white
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/comic',
-                              arguments: comic.id.toString(),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
+  position: _animation,
+  child: ListView.builder(
+    itemCount: dataProvider.eventsList.length,
+    itemBuilder: (context, index) {
+      var comic= dataProvider.comicsList[index];
+      return SlideTransition(
+        position: _animation,
+        child: Card(
+          elevation: 4,
+          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: Column(
+            children: [
+              Image.network(comic.thumbnail!.imgUrl()),
+              ListTile(
+                title: Text(comic.title.toString()), // Convert event id to string
+                subtitle: Text(comic.description ?? ''),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/event',
+                    arguments: comic.id.toString(),
                   );
                 },
-              ),
-            ),
-    );
-  }
-
+              )
+            ],
+          ),
+        ),
+      );
+    },
+  ),
+),);}
   @override
   void dispose() {
     _animationController.dispose();
