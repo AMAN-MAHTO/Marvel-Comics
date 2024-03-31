@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:marvel_api/provider/data_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -47,32 +48,39 @@ class _CharacterListScreenState extends State<CharacterListScreen>
           ? Center(child: CircularProgressIndicator())
           : SlideTransition(
               position: _animation,
-              child: ListView.builder(
+              child: MasonryGridView.builder(
+                gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
                 itemCount: dataProvider.characterList.length,
                 itemBuilder: (context, index) {
                   var character = dataProvider.characterList[index];
                   return SlideTransition(
                     position: _animation,
                     child: Card(
-                      elevation: 4,
-                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      child: Column(
-                        children: [
-                          Image.network(character.thumbnail!.imgUrl()),
-                          ListTile(
-                            title: Text(character.name!),
-                            subtitle: Text(character.description!.toString()),
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                '/character',
-                                arguments: character.id.toString(),
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                    ),
+                        elevation: 4,
+                        clipBehavior: Clip.hardEdge,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/character',
+                              arguments: character.id.toString(),
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              Image.network(character.thumbnail!.imgUrl()),
+                              ListTile(
+                                title: Text(
+                                  character.name!,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                              )
+                            ],
+                          ),
+                        )),
                   );
                 },
               ),
@@ -89,6 +97,7 @@ class _CharacterListScreenState extends State<CharacterListScreen>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _animationController.forward(); // Start the animation when the screen is shown
+    _animationController
+        .forward(); // Start the animation when the screen is shown
   }
 }
