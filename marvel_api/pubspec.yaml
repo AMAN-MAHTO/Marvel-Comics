@@ -30,3 +30,7 @@ flutter:
   assets:
     - assets/images/header.png
   uses-material-design: true
+  fonts:
+    - family: YatraOne
+      fonts:
+        - asset: assets/fonts/YatraOne-Regular.ttf

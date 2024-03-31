@@ -32,10 +32,12 @@ class MainApp extends StatelessWidget {
         title: 'Flutter Demo',
         themeMode: themeChanger.theme,
         theme: ThemeData(
+          fontFamily: "YatraOne",
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
           useMaterial3: true,
         ),
         darkTheme: ThemeData(
+          fontFamily: "YatraOne",
           colorScheme: ColorScheme.fromSeed(
               seedColor: Colors.red, brightness: Brightness.dark),
         ),
