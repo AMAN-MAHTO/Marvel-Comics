@@ -3,8 +3,6 @@ import 'package:marvel_api/screens/character/character_list_screen.dart';
 import 'package:marvel_api/screens/character/character_screen.dart';
 import 'package:marvel_api/screens/comic/comic_screen.dart';
 import 'package:marvel_api/screens/comic/comics_list_screen.dart';
-import 'package:marvel_api/screens/creator/creator_list_screen.dart';
-import 'package:marvel_api/screens/creator/creator_screen.dart';
 import 'package:marvel_api/screens/event/event_list_screen.dart';
 import 'package:marvel_api/screens/event/event_screen.dart';
 import 'package:marvel_api/screens/home_screen.dart';
@@ -61,14 +59,6 @@ class RoutGenerator {
       case '/storie':
         if (args is String) {
           return MaterialPageRoute(builder: (_) => StorieScreen(id: args));
-        } else
-          return _errorRoute();
-
-      case '/creators_list':
-        return MaterialPageRoute(builder: (_) => CreatorListScreen());
-      case '/creator':
-        if (args is String) {
-          return MaterialPageRoute(builder: (_) => CreatorScreen(id: args));
         } else
           return _errorRoute();
 

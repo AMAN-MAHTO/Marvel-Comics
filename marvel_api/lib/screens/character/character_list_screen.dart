@@ -41,51 +41,48 @@ class _CharacterListScreenState extends State<CharacterListScreen>
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Characters List'),
-      ),
       body: dataProvider.characterList.isEmpty
           ? Center(child: CircularProgressIndicator())
           : SlideTransition(
               position: _animation,
-              child: MasonryGridView.builder(
-                gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: MasonryGridView.builder(
+                  gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    
-                    ),
-                itemCount: dataProvider.characterList.length,
-                itemBuilder: (context, index) {
-                  var character = dataProvider.characterList[index];
-                  return SlideTransition(
-                    position: _animation,
-                    child: Card(
-                        elevation: 4,
-                        clipBehavior: Clip.hardEdge,
-                        margin:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/character',
-                              arguments: character.id.toString(),
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              Image.network(character.thumbnail!.imgUrl()),
-                              ListTile(
-                                title: Text(
-                                  character.name!,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                              )
-                            ],
-                          ),
-                        )),
-                  );
-                },
+                  ),
+                  itemCount: dataProvider.characterList.length,
+                  itemBuilder: (context, index) {
+                    var character = dataProvider.characterList[index];
+                    return SlideTransition(
+                      position: _animation,
+                      child: Card(
+                          elevation: 4,
+                          clipBehavior: Clip.hardEdge,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/character',
+                                arguments: character.id.toString(),
+                              );
+                            },
+                            child: Column(
+                              children: [
+                                Image.network(character.thumbnail!.imgUrl()),
+                                ListTile(
+                                  title: Text(
+                                    character.name!,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )),
+                    );
+                  },
+                ),
               ),
             ),);}
   @override

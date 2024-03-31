@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:marvel_api/provider/data_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -45,40 +46,50 @@ class _StoriesListScreenState extends State<StoriesListScreen>
       ),
       body: dataProvider.storiesList.isEmpty
           ? Center(child: CircularProgressIndicator())
-        : SlideTransition(
-  position: _animation,
-  child: ListView.builder(
-    itemCount: dataProvider.storiesList.length,
-    itemBuilder: (context, index) {
-      var story = dataProvider.storiesList[index];
-      return SlideTransition(
-        position: _animation,
-        child: Card(
-          elevation: 4,
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          child: Column(
-            children: [
-              if (story.thumbnail != null)
-                Image.network(story.thumbnail!.imgUrl()),
-              ListTile(
-                title: Text(story.title ?? ''),
-                subtitle: Text(story.description ?? ''),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/stories',
-                    arguments: story.id.toString(),
-                  );
-                },
-              )
-            ],
-          ),
-        ),
-      );
-    },
-  ),
-),);}
-
+          : SlideTransition(
+              position: _animation,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: MasonryGridView.builder(
+                  gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
+                  itemCount: dataProvider.storiesList.length,
+                  itemBuilder: (context, index) {
+                    var stories = dataProvider.storiesList[index];
+                    return SlideTransition(
+                      position: _animation,
+                      child: Card(
+                          elevation: 4,
+                          clipBehavior: Clip.hardEdge,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/comic',
+                                arguments: stories.id.toString(),
+                              );
+                            },
+                            child: Column(
+                              children: [
+                                Image.network(stories.thumbnail!.imgUrl()),
+                                ListTile(
+                                  title: Text(
+                                    stories.title!,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )),
+                    );
+                  },
+                ),
+              ),
+            ),
+    );
+  }
 
   @override
   void dispose() {
@@ -89,6 +100,7 @@ class _StoriesListScreenState extends State<StoriesListScreen>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _animationController.forward(); // Start the animation when the screen is shown
+    _animationController
+        .forward(); // Start the animation when the screen is shown
   }
 }
