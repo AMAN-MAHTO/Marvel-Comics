@@ -25,4 +25,6 @@ class ListType1 {
         items: items,
         returned: json['returned']);
   }
+
+  get length => null;
 }

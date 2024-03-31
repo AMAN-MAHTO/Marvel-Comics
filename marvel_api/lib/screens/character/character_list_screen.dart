@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:marvel_api/provider/data_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class CharacterListScreen extends StatefulWidget {
   const CharacterListScreen({Key? key}) : super(key: key);
@@ -73,8 +73,6 @@ class _CharacterListScreenState extends State<CharacterListScreen>
                                 ListTile(
                                   title: Text(
                                     character.name!,
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                 )
                               ],
@@ -84,10 +82,7 @@ class _CharacterListScreenState extends State<CharacterListScreen>
                   },
                 ),
               ),
-            ),
-    );
-  }
-
+            ),);}
   @override
   void dispose() {
     _animationController.dispose();
@@ -97,7 +92,6 @@ class _CharacterListScreenState extends State<CharacterListScreen>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _animationController
-        .forward(); // Start the animation when the screen is shown
+    _animationController.forward(); // Start the animation when the screen is shown
   }
 }

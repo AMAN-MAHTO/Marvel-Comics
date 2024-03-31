@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:marvel_api/provider/data_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class ComicsListScreen extends StatefulWidget {
   const ComicsListScreen({Key? key}) : super(key: key);
@@ -77,9 +78,6 @@ class _ComicsListScreenState extends State<ComicsListScreen>
                                   ListTile(
                                     title: Text(
                                       comic.title!,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium,
                                     ),
                                   )
                                 ],

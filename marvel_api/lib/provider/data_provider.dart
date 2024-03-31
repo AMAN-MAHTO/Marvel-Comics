@@ -103,4 +103,6 @@ class DataProvider with ChangeNotifier {
     updateSeriesList();
     updateStoriesList();
   }
+
+  getComicById(String id) {}
 }

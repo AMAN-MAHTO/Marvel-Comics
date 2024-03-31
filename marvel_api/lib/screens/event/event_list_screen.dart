@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:marvel_api/provider/data_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class EventListScreen extends StatefulWidget {
   const EventListScreen({Key? key}) : super(key: key);
@@ -76,8 +77,6 @@ class _EventListScreenState extends State<EventListScreen>
                                   ListTile(
                                     title: Text(
                                       event.title!,
-                                      style:
-                                          Theme.of(context).textTheme.titleMedium,
                                     ),
                                   )
                                 ],
