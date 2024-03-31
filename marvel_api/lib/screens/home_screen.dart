@@ -53,18 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           alignment: Alignment.center,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
             children: [
-              IconButton(
-                onPressed: () {
-                  // Open drawer
-                  Scaffold.of(context).openDrawer();
-                },
-                icon: Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                ),
-              ),
               Text(
                 getTitle(currentPageIndex), // Get the title dynamically
                 style: TextStyle(
@@ -73,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.white,
                 ),
               ),
-              SizedBox(width: 48), // Adjust the space between menu and text
+              // Adjust the space between menu and text
             ],
           ),
         ),
@@ -116,17 +108,6 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.emoji_objects),
-              title: Text(
-                "Creators",
-                style: TextStyle(fontSize: 20), // Increase text size
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/creators_list');
-              },
-            ),
-            ListTile(
               leading: Icon(Icons.settings),
               title: Text(
                 "Settings",
@@ -151,9 +132,9 @@ class _HomeScreenState extends State<HomeScreen> {
         destinations: navigation_destinations,
       ),
       body: <Widget>[
+        EventListScreen(),
         CharacterListScreen(),
         ComicsListScreen(),
-        EventListScreen(),
       ][currentPageIndex],
     );
   }
@@ -162,11 +143,11 @@ class _HomeScreenState extends State<HomeScreen> {
   String getTitle(int index) {
     switch (index) {
       case 0:
-        return 'CHARACTERS';
-      case 1:
-        return 'COMICS';
-      case 2:
         return 'EVENTS';
+      case 1:
+        return 'CHARACTERS';
+      case 2:
+        return 'COMICS';
       default:
         return 'CHARACTERS';
     }
@@ -174,6 +155,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> get navigation_destinations {
     return const <Widget>[
+      NavigationDestination(
+        selectedIcon: Icon(Icons.event),
+        icon: Icon(Icons.event_outlined),
+        label: 'Events',
+      ),
       NavigationDestination(
         selectedIcon: Icon(Icons.person_2),
         icon: Icon(Icons.person_2_outlined),
@@ -183,11 +169,6 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedIcon: Icon(Icons.note),
         icon: Icon(Icons.note_outlined),
         label: 'Comics',
-      ),
-      NavigationDestination(
-        selectedIcon: Icon(Icons.event),
-        icon: Icon(Icons.event_outlined),
-        label: 'Events',
       ),
     ];
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:marvel_api/models/series.dart';
 import 'package:marvel_api/provider/data_provider.dart';
 import 'package:provider/provider.dart';
@@ -46,37 +47,49 @@ class _SeriesListScreenState extends State<SeriesListScreen>
       body: dataProvider.seriesList.isEmpty
           ? Center(child: CircularProgressIndicator())
           : SlideTransition(
-  position: _animation,
-  child: ListView.builder(
-    itemCount: dataProvider.seriesList.length,
-    itemBuilder: (context, index) {
-      var series = dataProvider.seriesList[index];
-      return SlideTransition(
-        position: _animation,
-        child: Card(
-          elevation: 4,
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          child: Column(
-            children: [
-              Image.network(series.thumbnail!.imgUrl()),
-              ListTile(
-                title: Text(series.title ?? ''),
-                subtitle: Text(series.description ?? ''),
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/series',
-                    arguments: series.id.toString(),
-                  );
-                },
-              )
-            ],
-          ),
-        ),
-      );
-    },
-  ),
-),);}
+              position: _animation,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: MasonryGridView.builder(
+                  gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
+                  itemCount: dataProvider.seriesList.length,
+                  itemBuilder: (context, index) {
+                    var series = dataProvider.seriesList[index];
+                    return SlideTransition(
+                      position: _animation,
+                      child: Card(
+                          elevation: 4,
+                          clipBehavior: Clip.hardEdge,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/comic',
+                                arguments: series.id.toString(),
+                              );
+                            },
+                            child: Column(
+                              children: [
+                                Image.network(series.thumbnail!.imgUrl()),
+                                ListTile(
+                                  title: Text(
+                                    series.title!,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )),
+                    );
+                  },
+                ),
+              ),
+            ),
+    );
+  }
 
   @override
   void dispose() {
@@ -84,4 +97,3 @@ class _SeriesListScreenState extends State<SeriesListScreen>
     super.dispose();
   }
 }
-
