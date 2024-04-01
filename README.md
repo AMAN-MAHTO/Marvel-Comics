@@ -3,6 +3,8 @@
 
 Welcome to the Marvel Comic App, an immersive exploration of the Marvel Universe built with Flutter and the Marvel API. This app allows users to dive into a vast array of series, stories, characters, and comics from the iconic Marvel Universe, providing a seamless and intuitive experience for fans of all ages.
 
+## Download
+> https://drive.google.com/file/d/1SPwFNDXuYkI8ISnpCOFx8Bwj9qGe46sg/view?usp=sharing
 ## Features
 
 - **Explore Marvel Universe**: Browse through a comprehensive collection of series, stories, characters, and comics from Marvel's extensive library.
